@@ -1,0 +1,1 @@
+# domoticz-P110Tapo-plugin
