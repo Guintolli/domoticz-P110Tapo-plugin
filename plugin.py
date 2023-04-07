@@ -188,6 +188,8 @@ class P110TapoPlugin:
 
 
     def update(self):
+        dateToday: date = date.today()
+
         # Log in to device
         try:
             self.p110.handshake()
@@ -225,6 +227,10 @@ class P110TapoPlugin:
                 self.todayEnergyInWh = lastEnergyUsage["today_energy"]
                 Domoticz.Debug("Today energy from device: " + str(self.todayEnergyInWh) + " Wh")
                 self.isEnergyInitiated = True
+        # Reset Energy Usage if data is older  than one day
+        elif not powerStateNValue and self.todayEnergyInWh != 0 and getLastUpdateFromDomoticzKwhDevice().date() < dateToday:
+            self.todayEnergyInWh = 0
+            Domoticz.Debug("New day for switch Off device, todayEnergyInWh reset to 0")
 
         # Update Watt Usage device
         if Devices[UNIT_WATT_USAGE_DEVICE].sValue != str(currentPowerInWatt):
@@ -232,7 +238,6 @@ class P110TapoPlugin:
             Devices[UNIT_WATT_USAGE_DEVICE].Update(nValue=0, sValue=str(currentPowerInWatt))
 
         # Update General KwH device
-        dateToday = date.today()
         #user variable 'userVariableEnergyPreviousDays' has not been updated today
         if self.userVariableEnergyPreviousDays.lastUpdate.date() < dateToday:
             Domoticz.Debug("userVariableEnergyPreviousDays to old, need to be updated")
