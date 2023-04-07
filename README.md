@@ -16,7 +16,7 @@ This plugin requires Python version 3.7 or higher
 
 ### PyP100 library
 This plugin is using [Toby Johnson's PyP100 library](https://pypi.org/project/PyP100/). 
-The module can be Installed by running the following command: 
+The library can be installed by running the following command: 
 ```
 sudo pip3 install PyP100
 ```
