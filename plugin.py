@@ -206,6 +206,7 @@ class P110TapoPlugin:
         self.lastState = self.__getP110ResultFromRawResult(deviceInfo, "Device Info")
 
         # Update Switch ON/OFF device
+        isSwitchDeviceUpdated: bool = False
         if self.lastState is not None:
             powerState: bool = self.lastState["device_on"]
             powerStateNValue: int = 1 if powerState else 0
@@ -213,10 +214,11 @@ class P110TapoPlugin:
             if (Devices[UNIT_SWITCH_DEVICE].nValue != powerStateNValue) or (Devices[UNIT_SWITCH_DEVICE].sValue != powerStateSValue):
                 Domoticz.Debug("Updating %s (%d, %s)" % (Devices[UNIT_SWITCH_DEVICE].Name, powerStateNValue, powerStateSValue))
                 Devices[UNIT_SWITCH_DEVICE].Update(nValue=powerStateNValue, sValue=powerStateSValue)
+                isSwitchDeviceUpdated = True
 
         currentPowerInWatt: int = 0 #current Watt usage
-        # Get Energy Usage from P110 device if switch is on (or if we don't know)
-        if not self.isEnergyInitiated or self.lastState is None or powerStateNValue:
+        # Get Energy Usage from P110 device if switch is on (or if we don't know) or if switch just changes state (to don't miss update after switch off)
+        if not self.isEnergyInitiated or self.lastState is None or powerStateNValue or isSwitchDeviceUpdated:
             deviceEnergyUsage = self.p110.getEnergyUsage()
             lastEnergyUsage = self.__getP110ResultFromRawResult(deviceEnergyUsage, "Energy Usage")
             if lastEnergyUsage is not None:
@@ -228,7 +230,7 @@ class P110TapoPlugin:
                 Domoticz.Debug("Today energy from device: " + str(self.todayEnergyInWh) + " Wh")
                 self.isEnergyInitiated = True
         # Reset Energy Usage if data is older  than one day
-        elif not powerStateNValue and self.todayEnergyInWh != 0 and getLastUpdateFromDomoticzKwhDevice().date() < dateToday:
+        elif self.todayEnergyInWh != 0 and getLastUpdateFromDomoticzKwhDevice().date() < dateToday:
             self.todayEnergyInWh = 0
             Domoticz.Debug("New day for switch Off device, todayEnergyInWh reset to 0")
 
