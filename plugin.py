@@ -235,9 +235,7 @@ class P110TapoPlugin:
             Domoticz.Debug("New day for switch Off device, todayEnergyInWh reset to 0")
 
         # Update Watt Usage device
-        if Devices[UNIT_WATT_USAGE_DEVICE].sValue != str(currentPowerInWatt):
-            Domoticz.Debug("Updating %s (%i)" % (Devices[UNIT_WATT_USAGE_DEVICE].Name, currentPowerInWatt))
-            Devices[UNIT_WATT_USAGE_DEVICE].Update(nValue=0, sValue=str(currentPowerInWatt))
+        Devices[UNIT_WATT_USAGE_DEVICE].Update(nValue=0, sValue=str(currentPowerInWatt))
 
         # Update General KwH device
         #user variable 'userVariableEnergyPreviousDays' has not been updated today
@@ -257,8 +255,7 @@ class P110TapoPlugin:
 
         Domoticz.Debug("previousTodayEnergy: " + str(self.userVariableEnergyPreviousDays.value) + ", todayEnergyInWh: " + str(self.todayEnergyInWh))
         kWhSValue: str = str(currentPowerInWatt) + ";" + str(self.userVariableEnergyPreviousDays.value + self.todayEnergyInWh)
-        if Devices[UNIT_ENERGY_KWH_DEVICE].sValue != kWhSValue:
-            Devices[UNIT_ENERGY_KWH_DEVICE].Update(nValue=0, sValue=kWhSValue)
+        Devices[UNIT_ENERGY_KWH_DEVICE].Update(nValue=0, sValue=kWhSValue)
 
         return
 
