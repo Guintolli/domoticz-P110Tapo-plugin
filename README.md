@@ -46,7 +46,12 @@ sudo /etc/init.d/domoticz.sh restart
 
 ## Parameters
 
-TODO
+| Parameter | Description |
+| --------- | --------------------------------- |
+| username  | Email address of the Tapo account associated with the P110 device |
+| password  | Password of the Tapo account associated with the P110 device |
+| IP address | IP address of the P110 device|
+| Debug | Turn on/off debug messages|
 
 ## Acknowledgements
 
