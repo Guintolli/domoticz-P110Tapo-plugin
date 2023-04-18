@@ -50,5 +50,5 @@ TODO
 
 ## Acknowledgements
 
-* [Toby Johnson's PyP100 library](https://pypi.org/project/PyP100/)and its maintainer fishbigger
+* [Toby Johnson's PyP100 library](https://pypi.org/project/PyP100/) and its maintainer fishbigger
 * 593304 and its P100 domoticz plugin
