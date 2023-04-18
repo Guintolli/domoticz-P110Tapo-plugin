@@ -1,4 +1,4 @@
-# domoticz-P110Tapo-plugin
+# P110 Tapo plugin for Domoticz
 
 A Domoticz plugin to manage P110 Tapo TP-Link Smart Wi-Fi Socket (on/off switch & energy monitoring).
 It's inspired by the [Domoticz-Tapo](https://github.com/593304/Domoticz-Tapo) plugin (which manages on/off switch for P100 Tapo socket) made by 593304.
